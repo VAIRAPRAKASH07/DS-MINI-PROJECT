@@ -1,0 +1,92 @@
+import java.util.Scanner;
+class TicketSystem {
+public static int binarySearch(int seats[], int key) {
+int low = 0;
+
+int high = seats.length - 1;
+
+while (low <= high) {
+int mid = (low + high) / 2;
+
+if (seats[mid] == key)
+return mid;
+else if (seats[mid] < key)
+low = mid + 1;
+else
+high = mid - 1;
+}
+return -1; // Seat not found
+}
+
+public static void displaySeats(int seats[]) {
+System.out.println("\nAvailable Seats:");
+for (int seat : seats) {
+if (seat != -1)
+System.out.print(seat + " ");
+}
+System.out.println();
+}
+
+public static void main(String[] args) {
+
+Scanner sc = new Scanner(System.in);
+
+int seats[] = {1,2,3,4,5,6,7,8,9,10};
+
+int choice, seatNo;
+
+do {
+System.out.println("\n===== Ticket Booking System =====");
+
+System.out.println("1. View Available Seats");
+System.out.println("2. Book Ticket");
+System.out.println("3. Search Seat");
+System.out.println("4. Exit");
+System.out.print("Enter choice: ");
+choice = sc.nextInt();
+
+switch(choice) {
+
+case 1:
+displaySeats(seats);
+break;
+
+case 2:
+System.out.print("Enter seat number to book: ");
+seatNo = sc.nextInt();
+
+int index = binarySearch(seats, seatNo);
+
+if(index != -1 && seats[index] != -1) {
+seats[index] = -1; // Mark booked
+System.out.println("seat " + seatNo + " booked successfully!");
+} else {
+System.out.println("seat not available!");
+}
+break;
+
+case 3:
+System.out.print("Enter seat number to search: ");
+seatNo = sc.nextInt();
+index = binarySearch(seats, seatNo);
+
+if(index != -1 && seats[index] != -1)
+System.out.println("seat Available");
+
+else
+System.out.println("seat Not Available");
+break;
+
+case 4:
+System.out.println("Thank You!");
+break;
+
+default:
+System.out.println("Invalid choice!");
+}
+
+} while(choice != 4);
+
+sc.close();
+}
+}
